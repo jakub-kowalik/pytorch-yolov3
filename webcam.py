@@ -6,7 +6,7 @@ import cv2
 import argparse
 
 
-torch.backends.cidnn.benchmark = True
+# torch.backends.cidnn.benchmark = True
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 cline = argparse.ArgumentParser(description='YOLO v3 webcam detection demo')
 cline.add_argument('-weights', default='data/yolo3_weights.pth',
@@ -32,13 +32,14 @@ if __name__ == '__main__':
 
         cap = cv2.VideoCapture(0)
 
+
         while(True):
             _, image = cap.read()
             image = cv2.resize(image, (416, 416))
             res = detect(model, image, device, args.obj_thold,
                          args.nms_thold, args.model_res)
             cv2.imshow('webcam', res)
-            k = cv2.waitKey(100)
+            k = cv2.waitKey(1)
             if k == 27:                            # Press Esc to quit
                 break
         cap.release()
